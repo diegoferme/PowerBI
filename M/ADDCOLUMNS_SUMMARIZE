@@ -1,0 +1,4 @@
+Annual_Sales_Summary = ADDCOLUMNS(
+    SUMMARIZE(
+    Sales, (Sales[OrderDate].[Año]), 'Product'[Category]
+    ), "Total Quantity", CALCULATE(SUM(Sales[Quantity])))
