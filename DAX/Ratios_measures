@@ -1,0 +1,31 @@
+Sales & Country = IF(ISINSCOPE(Region[Region]), DIVIDE(SUM(Sales[Sales Amount]), CALCULATE(SUM(Sales[Sales Amount]),REMOVEFILTERS((Region[Region])))))
+
+# IF(ISINSCOPE(...), ...): Esta estructura condicional (IF) evalúa si Region[Region] está en el contexto. Si es así, se procede a calcular la expresión que sigue.
+# ISINSCOPE(Region[Region]): Esta función verifica si la columna Region[Region] está en el contexto actual. 
+# DIVIDE(... , ...): Esta función divide la suma de Sales[Sales Amount] en el contexto actual por la suma total de las ventas sin filtros de región.
+#   En otras palabras, verifica si el informe o visualización está mostrando datos a nivel de Region.
+# SUM(Sales[Sales Amount]): Calcula la suma de Sales[Sales Amount] en el contexto actual.
+# CALCULATE(SUM(Sales[Sales Amount]), REMOVEFILTERS(Region[Region])): Esta función CALCULATE recalcula la suma de Sales[Sales Amount], 
+# pero con los filtros de Region[Region] eliminados (gracias a REMOVEFILTERS(Region[Region])). 
+# Esto significa que obtiene la suma total de las ventas sin considerar la segmentación por región.
+
+
+Sales % Group = IF(ISINSCOPE(Region[Region]) || ISINSCOPE(Region[Country]), 
+                DIVIDE(SUM(Sales[Sales Amount]), CALCULATE(SUM(Sales[Sales Amount]), 
+                REMOVEFILTERS(Region[Region], Region[Country]))))
+
+# ISINSCOPE(Region[Region]) || ISINSCOPE(Region[Country]): Esta función verifica si Region[Region] o Region[Country] están en el contexto actual. 
+# Si cualquiera de estos niveles está en el contexto, la condición se cumple.
+# DIVIDE(... , ...): Esta función divide la suma de Sales[Sales Amount] en el contexto actual por la suma total de las ventas sin filtros de región o país.
+# SUM(Sales[Sales Amount]): Calcula la suma de Sales[Sales Amount] en el contexto actual.
+# CALCULATE(SUM(Sales[Sales Amount]), REMOVEFILTERS(Region[Region], Region[Country])): Esta función recalcula la suma de Sales[Sales Amount], 
+# pero eliminando los filtros tanto de Region[Region] como de Region[Country]. 
+# Esto significa que obtiene la suma total de las ventas sin considerar la segmentación ni por región ni por país.
+
+Sales All Region = DIVIDE(SUM(Sales[Sales Amount]), CALCULATE(SUM(Sales[Sales Amount]), REMOVEFILTERS(Region)))
+
+# DIVIDE(... , ...): Esta función divide la suma de Sales[Sales Amount] en el contexto actual por la suma total de las ventas sin filtros de la tabla Region.
+# SUM(Sales[Sales Amount]): Calcula la suma de Sales[Sales Amount] en el contexto actual.
+# CALCULATE(SUM(Sales[Sales Amount]), REMOVEFILTERS(Region)): Esta función recalcula la suma de Sales[Sales Amount], 
+# pero eliminando todos los filtros aplicados en cualquier columna de la tabla Region. 
+# Esto significa que obtiene la suma total de las ventas sin tener en cuenta ningún filtro de región.
