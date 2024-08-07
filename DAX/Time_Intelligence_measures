@@ -1,0 +1,28 @@
+Sales YoY Growth = VAR SalesPriorYear = CALCULATE(SUM(Sales[Sales Amount]), 
+                    PARALLELPERIOD('Date'[Date], -12, MONTH)) RETURN 
+                    DIVIDE((SUM(Sales[Sales Amount])- SalesPriorYear), SalesPriorYear)
+
+# VAR SalesPriorYear = ...: Aquí se define una variable SalesPriorYear que contiene el cálculo de las ventas del año anterior.
+# CALCULATE(SUM(Sales[Sales Amount]), PARALLELPERIOD('Date'[Date], -12, MONTH)):
+## CALCULATE(...): Recalcula la suma de las ventas, pero en el contexto del año anterior.
+## SUM(Sales[Sales Amount]): Calcula la suma de Sales[Sales Amount] en el contexto actual.
+## PARALLELPERIOD('Date'[Date], -12, MONTH): Esta función se usa para desplazar el contexto de fecha 12 meses hacia atrás (es decir, el mismo período del año anterior).
+# RETURN ...: Después de definir la variable SalesPriorYear, se retorna el cálculo principal de la medida.
+# DIVIDE((SUM(Sales[Sales Amount]) - SalesPriorYear), SalesPriorYear):
+## SUM(Sales[Sales Amount]) - SalesPriorYear: Calcula la diferencia entre las ventas del año actual y las ventas del año anterior 
+## (es decir, el crecimiento absoluto de las ventas).
+## DIVIDE(... , ...): Divide esta diferencia por las ventas del año anterior, para calcular el crecimiento porcentual de las ventas año tras año (Year-over-Year Growth).
+
+### Conclusión: Esta medida calcula el crecimiento porcentual de las ventas en comparación con el mismo período del año anterior.
+
+Sales YTD = TOTALYTD(SUM(Sales[Sales Amount]), 'Date'[Date], "6-30")
+
+# SUM(Sales[Sales Amount]): Calcula la suma de Sales[Sales Amount] en el contexto actual.
+# 'Date'[Date]: Especifica la columna de fecha que se utilizará para calcular el acumulado del año hasta la fecha (Year-to-Date).
+# "6-30": Especifica el final del año fiscal. En este caso, el año fiscal finaliza el 30 de junio. 
+# Esto significa que la medida calculará el acumulado de ventas desde el inicio del año fiscal hasta la fecha en curso, 
+# considerando que el año fiscal va del 1 de julio al 30 de junio.
+
+# Conclusión: Esta medida calcula el acumulado de ventas desde el inicio del año fiscal hasta la fecha actual. 
+# El año fiscal considerado en este caso va del 1 de julio al 30 de junio, 
+# por lo que la medida acumulará las ventas desde el 1 de julio hasta la fecha actual dentro de ese período fiscal.
