@@ -1,0 +1,2 @@
+Profit = SUM('Sales'[Sales Amount]) - SUM('Sales'[Total Product Cost])
+Profit Margin = DIVIDE([Profit], SUM('Sales'[Sales Amount]))
