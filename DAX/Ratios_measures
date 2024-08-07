@@ -9,6 +9,8 @@ Sales & Country = IF(ISINSCOPE(Region[Region]), DIVIDE(SUM(Sales[Sales Amount]),
 # pero con los filtros de Region[Region] eliminados (gracias a REMOVEFILTERS(Region[Region])). 
 # Esto significa que obtiene la suma total de las ventas sin considerar la segmentación por región.
 
+# Conclusión: Esta medida calcula el porcentaje de ventas de una región específica en comparación con las ventas totales sin tener en cuenta las regiones.
+
 
 Sales % Group = IF(ISINSCOPE(Region[Region]) || ISINSCOPE(Region[Country]), 
                 DIVIDE(SUM(Sales[Sales Amount]), CALCULATE(SUM(Sales[Sales Amount]), 
@@ -22,6 +24,9 @@ Sales % Group = IF(ISINSCOPE(Region[Region]) || ISINSCOPE(Region[Country]),
 # pero eliminando los filtros tanto de Region[Region] como de Region[Country]. 
 # Esto significa que obtiene la suma total de las ventas sin considerar la segmentación ni por región ni por país.
 
+# Conclusión: Esta medida calcula el porcentaje de ventas de una región o país específico en comparación con las ventas totales 
+# sin tener en cuenta los filtros de región o país.
+
 Sales All Region = DIVIDE(SUM(Sales[Sales Amount]), CALCULATE(SUM(Sales[Sales Amount]), REMOVEFILTERS(Region)))
 
 # DIVIDE(... , ...): Esta función divide la suma de Sales[Sales Amount] en el contexto actual por la suma total de las ventas sin filtros de la tabla Region.
@@ -29,3 +34,6 @@ Sales All Region = DIVIDE(SUM(Sales[Sales Amount]), CALCULATE(SUM(Sales[Sales Am
 # CALCULATE(SUM(Sales[Sales Amount]), REMOVEFILTERS(Region)): Esta función recalcula la suma de Sales[Sales Amount], 
 # pero eliminando todos los filtros aplicados en cualquier columna de la tabla Region. 
 # Esto significa que obtiene la suma total de las ventas sin tener en cuenta ningún filtro de región.
+
+# Conclusión: Esta medida calcula el porcentaje de ventas en el contexto actual en comparación con las ventas totales en todas las regiones, 
+# sin tener en cuenta ningún filtro de la tabla Region.
