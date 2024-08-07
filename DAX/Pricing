@@ -1,0 +1,3 @@
+Avg Price = AVERAGE('Sales'[Unit Price])
+Max Price = MAX('Sales'[Unit Price])
+Min Price = MIN(Sales[Unit Price])
