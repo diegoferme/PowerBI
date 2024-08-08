@@ -9,3 +9,17 @@ Year = "FY" & YEAR('Date'[Date]) + IF(MONTH('Date'[Date])>6,1)
 Quarter = 'Date'[Year] & " Q" & IF(MONTH('Date'[Date])<=3,3,IF(MONTH('Date'[Date])<=6,4,IF(MONTH('Date'[Date])<=9,1,2)))
 
 Month = FORMAT('Date'[Date], "yyyy MMM")
+
+
+# TABLE:
+
+CalendarTable = 
+ADDCOLUMNS(
+CALENDAR(DATE(2020, 1, 1), DATE(2023, 12, 31)),
+"Year", YEAR([Date]),
+"Month Number", MONTH([Date]),
+"Month", FORMAT([Date], "MMMM"),
+"Quarter", QUARTER([Date]),
+"Weekday", WEEKDAY([Date]),
+"Day", DAY([Date])
+)
