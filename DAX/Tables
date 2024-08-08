@@ -1,0 +1,10 @@
+Sales in USD = 
+ADDCOLUMNS(
+    Sales,
+    "Country Name", RELATED(Countries[Country]),
+    "Exchange Rate", RELATED('Exchange Data'[Exchange Rate]),
+    "Exchange Currency", RELATED('Exchange Data'[Exchange Currency]),
+    "Gross Revenue USD", [Gross Revenue] * RELATED('Exchange Data'[Exchange Rate]),
+    "Net Revenue USD", [Net Revenue] * RELATED('Exchange Data'[Exchange Rate]),
+    "Total Tax USD", [Total Tax] * RELATED('Exchange Data'[Exchange Rate])
+)
