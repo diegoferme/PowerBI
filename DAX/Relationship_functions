@@ -1,0 +1,37 @@
+# CROSSFILTER
+
+CROSSFILTER(<columnName1>, <columnName2>, <direction>)
+
+## Direction
+
+### None - no se produce ningún filtrado cruzado en esta relación.
+### Both - todos los filtros se aplican a ambos lados.
+### OneWay - los filtros de un lado o el lado de búsqueda de una relación filtra el otro lado. Esta opción no se puede usar con una relación uno a uno.
+###          No use esta opción en una relación de varios a varios porque no está claro cuál es el lado de la búsqueda;
+###          use OneWay_LeftFiltersRight o OneWay_RightFiltersLeft en su lugar.
+### OneWay_LeftFiltersRight -  los filtros del lado de <columnName1> filtran el lado de <columnName2>. Esta opción no se puede usar con una relación uno a uno ni varios a uno.
+### OneWay_RightFiltersLeft - los filtros del lado de <columnName2> filtran el lado de <columnName1>. Esta opción no se puede usar con una relación uno a uno ni varios a uno.
+
+BiDi:= CALCULATE([Distinct Count of ProductKey], CROSSFILTER(FactInternetSales[ProductKey], DimProduct[ProductKey] , Both))
+
+# RELATED
+
+RELATED(<column>)
+
+FILTER('InternetSales_USD',
+       'InternetSales_USD'[SalesTerritoryKey]<>1 && 'InternetSales_USD'[SalesTerritoryKey]<>2 && 'InternetSales_USD'[SalesTerritoryKey]<>3 
+       && 'InternetSales_USD'[SalesTerritoryKey]<>4 && 'InternetSales_USD'[SalesTerritoryKey]<>5)
+
+FILTER( 'InternetSales_USD', RELATED('SalesTerritory'[SalesTerritoryCountry])<>"United States")
+
+# RELATEDTABLE
+
+RELATEDTABLE(<tableName>)  
+
+= SUMX( RELATEDTABLE('InternetSales_USD'), [SalesAmount_USD])  
+
+#USERELATIONSHIP
+
+USERELATIONSHIP(<columnName1>,<columnName2>)
+
+= CALCULATE(SUM(InternetSales[SalesAmount]), USERELATIONSHIP(InternetSales[ShippingDate], DateTime[Date]))
